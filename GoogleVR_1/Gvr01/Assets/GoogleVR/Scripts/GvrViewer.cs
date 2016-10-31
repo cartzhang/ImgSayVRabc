@@ -334,10 +334,13 @@ public class GvrViewer : MonoBehaviour {
   /// @endcond
 
   private void InitDevice() {
+        // 1.3.0 -- 初始化设备
     if (device != null) {
       device.Destroy();
     }
+    // 获取设备
     device = BaseVRDevice.GetDevice();
+    // 设备初始化，这是继承类，其中override重新了Init。参考下图
     device.Init();
 
     List<string> diagnostics = new List<string>();
@@ -365,6 +368,7 @@ public class GvrViewer : MonoBehaviour {
   /// code to hiccup.  Exception: developer may call Application.DontDestroyOnLoad
   /// on the SDK if they want it to survive across scene loads.
   void Awake() {
+    // 1.0 -- 
     if (instance == null) {
       instance = this;
     }
@@ -373,11 +377,14 @@ public class GvrViewer : MonoBehaviour {
       UnityEngine.Object.DestroyImmediate(this);
       return;
     }
+    // 1.1 -- 
 #if UNITY_IOS
     Application.targetFrameRate = 60;
 #endif
     // Prevent the screen from dimming / sleeping
+    // 1.2 --
     Screen.sleepTimeout = SleepTimeout.NeverSleep;
+    // 1.3 -- 
     InitDevice();
     StereoScreen = null;
 
@@ -386,6 +393,8 @@ public class GvrViewer : MonoBehaviour {
 // - In-editor emulator when the current platform is Android or iOS.
 //   Since GVR is the only valid VR SDK on Android or iOS, this prevents it from
 //   interfering with VR SDKs on other platforms.
+
+     //1.4 -- 
 #if !UNITY_HAS_GOOGLEVR || (UNITY_EDITOR && (UNITY_ANDROID || UNITY_IOS))
       AddPrePostRenderStages();
 #endif  // !UNITY_HAS_GOOGLEVR || UNITY_EDITOR
