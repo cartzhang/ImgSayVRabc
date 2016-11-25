@@ -7,6 +7,7 @@
 *.userosscache
 *.sln.docstates
 # *.unitypackage
+*.csproj
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -25,6 +26,7 @@ bld/
 Library/
 Temp/
 Library/
+Dk1VR_0.4/
 
 
 
