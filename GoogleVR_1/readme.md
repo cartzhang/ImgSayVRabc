@@ -23,7 +23,8 @@ google发布Cartboar的目的，用简单好玩廉价的方式来体验虚拟现
   Untiy 各个版本地址：
   
   https://unity3d.com/cn/get-unity/download/archive?_ga=1.41972967.311279473.1476870291
-  ![image](https://github.com/cartzhang/ImgSayVRabc/tree/master/GoogleVR_1/Img/2.png)
+
+  ![image](https://github.com/cartzhang/ImgSayVRabc/blob/master/GoogleVR_1/Img/2.png)
   
   1> 其中5.4.0f3其官方的下载地址：
   
