@@ -171,7 +171,9 @@ Set的过程，先需要把之前的渲染纹理给Release释放掉，然后在s
 
 发现奥秘了么？
 看图
+
 ![image](https://github.com/cartzhang/ImgSayVRabc/blob/master/GooglVR_3/Img/2.png)
+
 红框内的在vs中代码颜色都一样。我辨认都混淆了。
 
 看到ScreenSizes这个是个枚举类。他里面的枚举值Nexus5 等，都是枚举值类型，隐形继承的是int。
