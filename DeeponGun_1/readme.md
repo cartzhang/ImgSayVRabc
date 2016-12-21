@@ -8,7 +8,7 @@
 
 ### 1. 在Software下的DeePoonUnityPC0.2.8b_forUnity5.0，这个是deepoon为配合枪给出的Unity插件。
 
-![image](H:\Unity\UnitySay\DeeponGun_1\Img\1.png)
+![image](https://github.com/cartzhang/ImgSayVRabc/blob/master/DeeponGun_1/Img/1.png)
 图1
 
 #### 2. 使用了Unity5.3.0f4版本
