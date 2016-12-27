@@ -2,7 +2,7 @@
 Unity的 Steam VR插件本身也带有事件处理。但是我还想把事件给解耦出来，这样方便在各个项目中，不用关心硬件的各种处理而只用关心使用的，且可以任意的通过接受事件来触发相应的操作。
 今天我们说谈论的就是下面这个东西：
 
-![image](H:\Unity\ImgSayVRabc\ImgSayVRabc\ViveEventDemo\Img\1.1.png)
+![image](https://github.com/cartzhang/ImgSayVRabc/blob/master/ViveEventDemo/Img/1.1.png)
 
 ## 一、所需资源
 
