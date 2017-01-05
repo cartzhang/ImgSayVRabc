@@ -31,5 +31,8 @@ http://blog.csdn.net/cartzhang/article/details/53583784
 《图说VR入门》——360全景视频
 http://blog.csdn.net/cartzhang/article/details/53674647
 
+《图说VR》——HTC Vive控制器按键事件解耦使用
+http://blog.csdn.net/cartzhang/article/details/53915229
+
 当然，也是诚惶诚恐，希望自己知行合一，修行在个人！
 谢谢各位！
