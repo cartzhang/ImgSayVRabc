@@ -56,14 +56,14 @@ public class SteamVR_ControllerManager : MonoBehaviour
 		SteamVR_Utils.Event.Listen("input_focus", OnInputFocus);
 		SteamVR_Utils.Event.Listen("device_connected", OnDeviceConnected);
 		SteamVR_Utils.Event.Listen("TrackedDeviceRoleChanged", OnTrackedDeviceRoleChanged);
-	}
+    }
 
 	void OnDisable()
 	{
 		SteamVR_Utils.Event.Remove("input_focus", OnInputFocus);
 		SteamVR_Utils.Event.Remove("device_connected", OnDeviceConnected);
 		SteamVR_Utils.Event.Remove("TrackedDeviceRoleChanged", OnTrackedDeviceRoleChanged);
-	}
+    }
 
 	static string[] labels = { "left", "right" };
 
@@ -232,6 +232,8 @@ public class SteamVR_ControllerManager : MonoBehaviour
 		{
 			SetTrackedDeviceIndex(objectIndex++, OpenVR.k_unTrackedDeviceIndexInvalid);
 		}
-	}
+
+        SLQJ.NotificationManager.Instance.Notify(SLQJ.NotificationType.Controller_Change.ToString());
+    }
 }
 

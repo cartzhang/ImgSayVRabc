@@ -14,22 +14,22 @@ public class ControlButtonAns : MonoBehaviour
     }
 
     void GunFire(MessageObject obj)
-    {
-        Debug.Log("response gun fire , trigger button click");
+    {   
+        Debug.Log("response gun fire , trigger button click by " + obj.MsgValue);
     }
 
     void GatheringStength(MessageObject obj)
     {
-        Debug.Log("response gathering stength, trigger button hold");
+        Debug.Log("response gathering stength, trigger button hold by " + obj.MsgValue );
     }
 
     void GunKeyUp(MessageObject obj)
     {
-        Debug.Log("response key up, trigger button unclicked");
+        Debug.Log("response key up, trigger button unclicked by " + obj.MsgValue);
     }
 
     void ThrowBomb(MessageObject obj)
     {
-        Debug.Log("response throw bomb , pad button click");
+        Debug.Log("response throw bomb , pad button click by " + obj.MsgValue);
     }
 }

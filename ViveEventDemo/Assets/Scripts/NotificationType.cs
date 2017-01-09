@@ -7,6 +7,7 @@
         Gun_KeyUp,          // 抬起
         Throw_Bomb,         // 扔雷
         Gathering_Stength,  // 蓄力
+        Controller_Change,  // 手柄左右交換
     } 
 }
 
