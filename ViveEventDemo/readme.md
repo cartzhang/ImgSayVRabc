@@ -445,7 +445,7 @@ https://github.com/cartzhang/ImgSayVRabc/tree/master/ViveEventDemo
 
 steam 插件工程导出地址：
 
-https://github.com/cartzhang/ImgSayVRabc/blob/master/ViveEventDemo/SteamViveControllerEventDemoCartzhang.unitypackage
+https://github.com/cartzhang/ImgSayVRabc/blob/master/ViveEventDemo/HTVVive_event_add_controller_inedex%20_Cartzhang.unitypackage
 
 ##七、 参考
 
