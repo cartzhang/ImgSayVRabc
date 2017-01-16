@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using SLQJ;
+using Valve.VR;
 
 public enum HandleControllerType:int
 {
@@ -16,9 +17,10 @@ public enum HandleControllerType:int
 public class ViveEvent : MonoBehaviour
 {
     private HandleControllerType controllerType = HandleControllerType.Invalid;
+    private SteamVR_TrackedController trackedController;
     void Start()
     {
-        var trackedController = GetComponent<SteamVR_TrackedController>();
+        trackedController = GetComponent<SteamVR_TrackedController>();
         if (trackedController == null)
         {
             trackedController = gameObject.AddComponent<SteamVR_TrackedController>();
@@ -75,6 +77,15 @@ public class ViveEvent : MonoBehaviour
 
     private void CheckLeftOrRightContoller(MessageObject obj)
     {
+        ETrackedControllerRole trackerdRole = ETrackedControllerRole.Invalid;
+        var system = Valve.VR.OpenVR.System;
+        if (system != null && null != trackedController)
+        {
+            trackerdRole = system.GetControllerRoleForTrackedDeviceIndex(trackedController.controllerIndex);
+        }
+
+        #region use by string name as legacy
+#if By_Name_String
         controllerType = HandleControllerType.Invalid;
         if (this.name.Contains("left"))
         {
@@ -84,5 +95,8 @@ public class ViveEvent : MonoBehaviour
         {
             controllerType = HandleControllerType.RightHand;
         }
+#endif
+        #endregion
+        controllerType = (HandleControllerType)((int)trackerdRole);
     }
 }
