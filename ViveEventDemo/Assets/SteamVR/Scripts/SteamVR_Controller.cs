@@ -135,7 +135,10 @@ public class SteamVR_Controller
 		public bool GetHairTrigger() { Update(); return hairTriggerState; }
 		public bool GetHairTriggerDown() { Update(); return hairTriggerState && !hairTriggerPrevState; }
 		public bool GetHairTriggerUp() { Update(); return !hairTriggerState && hairTriggerPrevState; }
-	}
+
+        // get trigger distance.@cartzhang
+        public float GetHairTriggerDist() { return hairTriggerLimit; }
+    }
 
 	private static Device[] devices;
 

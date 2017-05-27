@@ -8,6 +8,7 @@
         Throw_Bomb,         // 扔雷
         Gathering_Stength,  // 蓄力
         Controller_Change,  // 手柄左右交換
+        Controller_Shake,   // 手柄震动消息
     } 
 }
 

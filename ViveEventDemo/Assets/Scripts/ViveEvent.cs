@@ -16,8 +16,13 @@ public enum HandleControllerType:int
 // 實現手柄的案件事件功能
 public class ViveEvent : MonoBehaviour
 {
+    [Header("是否隐藏原手柄模型")]
+    public bool HiddenViveControlllerMode = false;
+
     private HandleControllerType controllerType = HandleControllerType.Invalid;
     private SteamVR_TrackedController trackedController;
+    private SteamVR_Controller.Device device;
+
     void Start()
     {
         trackedController = GetComponent<SteamVR_TrackedController>();
@@ -34,8 +39,15 @@ public class ViveEvent : MonoBehaviour
         trackedController.PadUnclicked += new ClickedEventHandler(OnPadUnclicked);
 
         CheckLeftOrRightContoller(null);
+
         NotificationManager.Instance.Subscribe(NotificationType.Controller_Change.ToString(), CheckLeftOrRightContoller);
-        Invoke("HiddenControllerModel", 1f);
+        NotificationManager.Instance.Subscribe(NotificationType.Controller_Shake.ToString(), ControllerShake);
+        device = SteamVR_Controller.Input((int)trackedController.controllerIndex);
+        // 是否隐藏原有手柄模型
+        if (HiddenViveControlllerMode)
+        {
+            Invoke("HiddenControllerModel", 1f);
+        }
     }
     
     void OnTriggerClicked(object sender, ClickedEventArgs e)
@@ -83,20 +95,44 @@ public class ViveEvent : MonoBehaviour
         {
             trackerdRole = system.GetControllerRoleForTrackedDeviceIndex(trackedController.controllerIndex);
         }
-
-        #region use by string name as legacy
-#if By_Name_String
-        controllerType = HandleControllerType.Invalid;
-        if (this.name.Contains("left"))
-        {
-            controllerType = HandleControllerType.LeftHand;
-        }
-        if (this.name.Contains("right"))
-        {
-            controllerType = HandleControllerType.RightHand;
-        }
-#endif
-        #endregion
         controllerType = (HandleControllerType)((int)trackerdRole);
+    }
+
+    private void ControllerShake(MessageObject obj)
+    {
+        if (controllerType == (HandleControllerType)obj.MsgValue)
+        {
+            StartCoroutine(Shake(0.2f));
+        }
+    }
+
+    private IEnumerator Shake(float durationTime)
+    {
+        while (durationTime > 0)
+        {
+            Debug.Assert(null != device);
+            device.TriggerHapticPulse(1000);
+            yield return null;
+            durationTime -= Time.deltaTime;
+        }
+    }
+
+    /// <summary>
+    /// get trigger move distance.
+    /// you should add funtion in SteamVR_Controller.cs 
+    /// /*
+    /// // get trigger distance.@cartzhang
+    /// public float GetHairTriggerDist() { return hairTriggerLimit; }
+    /// */
+    /// </summary>
+    /// <returns></returns>
+    public float GetTriggerDist()
+    {
+        int index = (int)trackedController.controllerIndex;
+        if (index != 0)
+        {
+            return SteamVR_Controller.Input(index).GetHairTriggerDist();
+        }
+        return 0f;
     }
 }
