@@ -8,8 +8,16 @@ public enum HandleControllerType:int
     Invalid = 0,
     LeftHand = 1,
     RightHand = 2,
-}     
-
+}
+/// <summary>
+/// whether left or right controller should switch.
+/// </summary>
+public enum RelativeDirection : int
+{
+    OnlyOne,    // only one controler.
+    RD_Left,    // in left hand.
+    RD_Right,   // in right hand.
+}
 /// <summary>
 /// 可以自定義添加事件，然後實現消息的傳遞。
 /// </summary>
@@ -18,6 +26,8 @@ public class ViveEvent : MonoBehaviour
 {
     [Header("是否隐藏原手柄模型")]
     public bool HiddenViveControlllerMode = false;
+    [Header("当前手柄在左手或右手持有")]
+    public RelativeDirection RelativeState;
 
     private HandleControllerType controllerType = HandleControllerType.Invalid;
     private SteamVR_TrackedController trackedController;
@@ -40,7 +50,7 @@ public class ViveEvent : MonoBehaviour
 
         CheckLeftOrRightContoller(null);
 
-        NotificationManager.Instance.Subscribe(NotificationType.Controller_Change.ToString(), CheckLeftOrRightContoller);
+        NotificationManager.Instance.Subscribe(NotificationType.Controller_HandState.ToString(), CheckLeftOrRightContoller);
         NotificationManager.Instance.Subscribe(NotificationType.Controller_Shake.ToString(), ControllerShake);
         device = SteamVR_Controller.Input((int)trackedController.controllerIndex);
         // 是否隐藏原有手柄模型
@@ -48,6 +58,7 @@ public class ViveEvent : MonoBehaviour
         {
             Invoke("HiddenControllerModel", 1f);
         }
+        InvokeRepeating("CheckRelativeState", 0.2f, 1.0f);
     }
     
     void OnTriggerClicked(object sender, ClickedEventArgs e)
@@ -134,5 +145,42 @@ public class ViveEvent : MonoBehaviour
             return SteamVR_Controller.Input(index).GetHairTriggerDist();
         }
         return 0f;
+    }
+    /// <summary>
+    /// check holder state.
+    /// </summary>
+    private void CheckRelativeState()
+    {
+        GetControllerStatus((int)trackedController.controllerIndex);
+        if ((controllerType == HandleControllerType.LeftHand && RelativeState == RelativeDirection.RD_Right)
+            || (controllerType == HandleControllerType.RightHand && RelativeState == RelativeDirection.RD_Left))
+        {
+            Debug.Log(controllerType + "need change");
+            NotificationManager.Instance.Notify(NotificationType.Switch_Controller.ToString(), (int)controllerType);
+        }
+    }
+    /// <summary>
+    /// you should know it, left or right is relative position to HMD.
+    /// </summary>
+    /// <param name="index"></param>
+    private void GetControllerStatus(int index)
+    {
+        var l = SteamVR_Controller.GetDeviceIndex(SteamVR_Controller.DeviceRelation.Leftmost);
+        var r = SteamVR_Controller.GetDeviceIndex(SteamVR_Controller.DeviceRelation.Rightmost);
+#if UNITY_EDITOR
+        Debug.Log("index is " + index + ((l == r) ? "first" : (l == index) ? "left" : "right"));
+#endif
+        if (l == r)
+        {
+            RelativeState = RelativeDirection.OnlyOne;
+        }
+        else if (l == index)
+        {
+            RelativeState = RelativeDirection.RD_Left;
+        }
+        else
+        {
+            RelativeState = RelativeDirection.RD_Right;
+        }
     }
 }

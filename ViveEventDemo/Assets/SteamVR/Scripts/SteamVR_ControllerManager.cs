@@ -233,7 +233,7 @@ public class SteamVR_ControllerManager : MonoBehaviour
 			SetTrackedDeviceIndex(objectIndex++, OpenVR.k_unTrackedDeviceIndexInvalid);
 		}
 
-        SLQJ.NotificationManager.Instance.Notify(SLQJ.NotificationType.Controller_Change.ToString());
+        SLQJ.NotificationManager.Instance.Notify(SLQJ.NotificationType.Controller_HandState.ToString());
     }
 }
 
